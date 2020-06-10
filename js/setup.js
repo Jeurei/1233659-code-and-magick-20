@@ -9,8 +9,8 @@ var simillarSetup = document.querySelector('.setup-similar');
 var simillarList = userSetup.querySelector('.setup-similar-list');
 var template = document.querySelector('#similar-wizard-template').content.querySelector('.setup-similar-item');
 
-function getRandomInRange(max, min) {
-  return min === undefined ? Math.floor(Math.random() * max) : Math.floor(min + Math.random() * (max + 1 - min));
+function getRandomInRange(min, max) {
+  return Math.floor(min + Math.random() * (max + 1 - min));
 }
 
 function renderWizards(arr) {
@@ -27,9 +27,9 @@ function renderWizards(arr) {
 
 function createWizardObj() {
   return {
-    name: WIZARD_NAMES[getRandomInRange(WIZARD_NAMES.length)] + ' ' + WIZARD_SURNAMES[getRandomInRange(WIZARD_SURNAMES.length)],
-    coatColor: COAT_COLORS[getRandomInRange(COAT_COLORS.length)],
-    eyesColor: EYES_COLOR[getRandomInRange(EYES_COLOR.length)]
+    name: WIZARD_NAMES[getRandomInRange(0, WIZARD_NAMES.length - 1)] + ' ' + WIZARD_SURNAMES[getRandomInRange(0, WIZARD_SURNAMES.length)],
+    coatColor: COAT_COLORS[getRandomInRange(0, COAT_COLORS.length - 1)],
+    eyesColor: EYES_COLOR[getRandomInRange(0, EYES_COLOR.length - 1)]
   };
 }
 
