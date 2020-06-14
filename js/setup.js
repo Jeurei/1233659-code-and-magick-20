@@ -7,8 +7,8 @@ var FIREBALL_COLORS = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'];
 var QUANTITY_OF_WIZARDS = 4;
 var MIN_NAME_LENGTH = 2;
 var MAX_NAME_LENGTH = 25;
-var escCode = 'Escape';
-var enterCode = 'Enter';
+var ESC_CODE = 'Escape';
+var ENTER_CODE = 'Enter';
 var userSetup = document.querySelector('.setup');
 var setupOpen = document.querySelector('.setup-open');
 var setupClose = document.querySelector('.setup-close');
@@ -29,29 +29,32 @@ function getRandomInRange(min, max) {
   return Math.floor(min + Math.random() * (max + 1 - min));
 }
 
-var setupEscPress = function (evt) {
+var onSetupEscPress = function (evt) {
 
-  if (evt.key === escCode && document.activeElement !== userName) {
+  if (evt.key === ESC_CODE && document.activeElement !== userName) {
     evt.preventDefault();
     closeSetup();
   }
 
 };
 
-var setupEnterPress = function (evt) {
-  if (evt.key === enterCode) {
+var onSetupEnterPress = function (evt) {
+
+  if (evt.key === ENTER_CODE) {
     userSetup.classList.add('hidden');
     userSetup.submit();
   }
+
 };
 
-var submitSetup = function () {
+var onSubmitSetup = function () {
   userSetup.classList.add('hidden');
   userSetup.submit();
-  setupSubmit.removeEventListener('click', submitSetup);
+  setupSubmit.removeEventListener('click', onSubmitSetup);
 };
 
-var invalidUserName = function () {
+var checkInvalidUserName = function () {
+
   if (userName.validity.valueMissing) {
     userName.setCustomValidity('Обязательное поле');
     setupSubmit.setAttribute('disabled', true);
@@ -59,9 +62,10 @@ var invalidUserName = function () {
     userName.setCustomValidity('');
     setupSubmit.setAttribute('disabled', false);
   }
+
 };
 
-var invalidInput = function () {
+var checkInvalidInput = function () {
   var valueLength = userName.value.length;
 
   if (valueLength < MIN_NAME_LENGTH) {
@@ -74,12 +78,10 @@ var invalidInput = function () {
     userName.setCustomValidity('');
     setupSubmit.setAttribute('disabled', false);
   }
+
 };
 
 var changeCoat = function () {
-  if (sliderCounter === COAT_COLORS.length) {
-    sliderCounter = 0;
-  }
   var current = sliderCounter % COAT_COLORS.length;
   userCoat.style.fill = COAT_COLORS[current];
   coatColor.value = COAT_COLORS[current];
@@ -87,9 +89,6 @@ var changeCoat = function () {
 };
 
 var changeEyes = function () {
-  if (sliderCounter === EYES_COLORS.length) {
-    sliderCounter = 0;
-  }
   var current = sliderCounter % EYES_COLORS.length;
   userEyes.style.fill = EYES_COLORS[current];
   eyesColor.value = EYES_COLORS[current];
@@ -97,11 +96,6 @@ var changeEyes = function () {
 };
 
 var changeFireball = function () {
-
-  if (sliderCounter === FIREBALL_COLORS.length) {
-    sliderCounter = 0;
-  }
-
   var current = sliderCounter % FIREBALL_COLORS.length;
   userFireball.style.backgroundColor = FIREBALL_COLORS[current];
   fireballColor.value = FIREBALL_COLORS[current];
@@ -111,15 +105,15 @@ var changeFireball = function () {
 var openSetup = function () {
   userSetup.classList.remove('hidden');
 
-  document.addEventListener('keydown', setupEscPress);
+  document.addEventListener('keydown', onSetupEscPress);
 
-  setupSubmit.addEventListener('click', submitSetup);
+  setupSubmit.addEventListener('click', onSubmitSetup);
 
-  setupSubmit.addEventListener('keydown', setupEnterPress);
+  setupSubmit.addEventListener('keydown', onSetupEnterPress);
 
-  userName.addEventListener('invalid', invalidUserName);
+  userName.addEventListener('invalid', checkInvalidUserName);
 
-  userName.addEventListener('input', invalidInput);
+  userName.addEventListener('input', checkInvalidInput);
 
   userCoat.addEventListener('click', changeCoat);
 
@@ -135,15 +129,15 @@ var openSetup = function () {
 var closeSetup = function () {
   userSetup.classList.add('hidden');
 
-  document.removeEventListener('keydown', setupEscPress);
+  document.removeEventListener('keydown', onSetupEscPress);
 
-  setupSubmit.removeEventListener('click', submitSetup);
+  setupSubmit.removeEventListener('click', onSubmitSetup);
 
-  setupSubmit.removeEventListener('keydown', setupEnterPress);
+  setupSubmit.removeEventListener('keydown', onSetupEnterPress);
 
-  userName.removeEventListener('invalid', invalidUserName);
+  userName.removeEventListener('invalid', checkInvalidUserName);
 
-  userName.removeEventListener('input', invalidInput);
+  userName.removeEventListener('input', checkInvalidInput);
 
   userCoat.removeEventListener('click', changeCoat);
 
