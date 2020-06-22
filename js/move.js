@@ -1,8 +1,10 @@
 'use strict';
 
-window.move = (function () {
+(function () {
   var START_CORD_Y = 80;
   var START_CORD_X = 50;
+  var userSetup = document.querySelector('.setup');
+  var userSetupAvatar = userSetup.querySelector('.upload');
 
   var startDrag = function (evt) {
     evt.preventDefault();
@@ -29,8 +31,8 @@ window.move = (function () {
         y: moveEvt.clientY
       };
 
-      window.util.userSetup.style.top = (window.util.userSetup.offsetTop - shift.y) + 'px';
-      window.util.userSetup.style.left = (window.util.userSetup.offsetLeft - shift.x) + 'px';
+      userSetup.style.top = (userSetup.offsetTop - shift.y) + 'px';
+      userSetup.style.left = (userSetup.offsetLeft - shift.x) + 'px';
     };
 
     var onMouseUp = function (upEvt) {
@@ -51,9 +53,8 @@ window.move = (function () {
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
   };
-  var userSetupAvatar = window.util.userSetup.querySelector('.upload');
   userSetupAvatar.addEventListener('mousedown', startDrag);
-  return {
+  window.move = {
     START_CORD_Y: START_CORD_Y,
     START_CORD_X: START_CORD_X,
   };

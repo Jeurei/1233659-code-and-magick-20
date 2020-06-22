@@ -1,10 +1,15 @@
 'use strict';
-window.setupControls = (function () {
+(function () {
   var MIN_NAME_LENGTH = 2;
   var MAX_NAME_LENGTH = 25;
   var userName = document.querySelector('.setup-user-name');
   var setupSubmit = document.querySelector('.setup-submit');
-
+  var userSetup = document.querySelector('.setup');
+  var userCoat = userSetup.querySelector('.wizard-coat');
+  var userEyes = userSetup.querySelector('.wizard-eyes');
+  var userFireball = userSetup.querySelector('.setup-fireball-wrap');
+  var setupOpen = document.querySelector('.setup-open');
+  var setupClose = document.querySelector('.setup-close');
 
   var onSetupEscPress = function (evt) {
 
@@ -18,15 +23,15 @@ window.setupControls = (function () {
   var onSetupEnterPress = function (evt) {
 
     if (evt.key === window.ENTER_CODE) {
-      window.util.userSetup.classList.add('hidden');
-      window.util.userSetup.submit();
+      userSetup.classList.add('hidden');
+      userSetup.submit();
     }
 
   };
 
   var onSubmitSetup = function () {
-    window.util.userSetup.classList.add('hidden');
-    window.util.userSetup.submit();
+    userSetup.classList.add('hidden');
+    userSetup.submit();
     setupSubmit.removeEventListener('click', onSubmitSetup);
   };
 
@@ -58,7 +63,7 @@ window.setupControls = (function () {
 
   };
   var openSetup = function () {
-    window.util.userSetup.classList.remove('hidden');
+    userSetup.classList.remove('hidden');
 
     document.addEventListener('keydown', onSetupEscPress);
 
@@ -70,22 +75,22 @@ window.setupControls = (function () {
 
     userName.addEventListener('input', checkInvalidInput);
 
-    window.util.userCoat.addEventListener('click', window.customPlayerMage.changeCoat);
+    userCoat.addEventListener('click', window.customPlayerMage.changeCoat);
 
-    window.util.userEyes.addEventListener('click', window.customPlayerMage.changeEyes);
+    userEyes.addEventListener('click', window.customPlayerMage.changeEyes);
 
-    window.util.userFireball.addEventListener('click', window.customPlayerMage.changeFireball);
+    userFireball.addEventListener('click', window.customPlayerMage.changeFireball);
 
-    window.util.setupClose.addEventListener('click', closeSetup);
+    setupClose.addEventListener('click', closeSetup);
 
-    window.util.setupOpen.removeEventListener('click', openSetup);
+    setupOpen.removeEventListener('click', openSetup);
   };
 
   var closeSetup = function () {
-    window.util.userSetup.classList.add('hidden');
+    userSetup.classList.add('hidden');
 
-    window.util.userSetup.style.top = window.move.START_CORD_Y + 'px';
-    window.util.userSetup.style.left = window.move.START_CORD_X + '%';
+    userSetup.style.top = window.move.START_CORD_Y + 'px';
+    userSetup.style.left = window.move.START_CORD_X + '%';
 
     document.removeEventListener('keydown', onSetupEscPress);
 
@@ -97,18 +102,18 @@ window.setupControls = (function () {
 
     userName.removeEventListener('input', checkInvalidInput);
 
-    window.util.userCoat.removeEventListener('click', window.changeCoat);
+    userCoat.removeEventListener('click', window.changeCoat);
 
-    window.util.userEyes.removeEventListener('click', window.changeEyes);
+    userEyes.removeEventListener('click', window.changeEyes);
 
-    window.util.userFireball.removeEventListener('click', window.changeFireball);
+    userFireball.removeEventListener('click', window.changeFireball);
 
-    window.util.setupOpen.addEventListener('click', openSetup);
+    setupOpen.addEventListener('click', openSetup);
 
-    window.util.setupClose.removeEventListener('click', closeSetup);
+    setupClose.removeEventListener('click', closeSetup);
 
   };
-  return {
+  window.setupControls = {
     openSetup: openSetup,
     closeSetup: closeSetup,
   };

@@ -1,11 +1,17 @@
 'use strict';
-window.setupSimillarWizards = (function () {
+(function () {
   var WIZARD_NAMES = ['Иван', 'Хуан', 'Себастьян', 'Мария', 'Кристоф', 'Виктор', 'Юлия', 'Люпита', 'Вашингтон'];
   var WIZARD_SURNAMES = ['да Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'];
+  var COAT_COLORS = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
+  var EYES_COLORS = ['black', 'red', 'blue', 'yellow', 'green'];
   var QUANTITY_OF_WIZARDS = 4;
+  var userSetup = document.querySelector('.setup');
   var simillarSetup = document.querySelector('.setup-similar');
-  var simillarList = window.util.userSetup.querySelector('.setup-similar-list');
+  var simillarList = userSetup.querySelector('.setup-similar-list');
   var template = document.querySelector('#similar-wizard-template').content.querySelector('.setup-similar-item');
+  var setupOpen = document.querySelector('.setup-open');
+  var setupClose = document.querySelector('.setup-close');
+
   function renderWizards(arr) {
     var fragment = document.createDocumentFragment();
 
@@ -22,8 +28,8 @@ window.setupSimillarWizards = (function () {
   function createWizardObj() {
     return {
       name: WIZARD_NAMES[window.util.getRandomInRange(0, WIZARD_NAMES.length - 1)] + ' ' + WIZARD_SURNAMES[window.util.getRandomInRange(0, WIZARD_SURNAMES.length)],
-      coatColor: window.util.COAT_COLORS[window.util.getRandomInRange(0, window.util.COAT_COLORS.length - 1)],
-      eyesColor: window.util.EYES_COLORS[window.util.getRandomInRange(0, window.util.EYES_COLORS.length - 1)]
+      coatColor: COAT_COLORS[window.util.getRandomInRange(0, COAT_COLORS.length - 1)],
+      eyesColor: EYES_COLORS[window.util.getRandomInRange(0, EYES_COLORS.length - 1)]
     };
   }
 
@@ -41,18 +47,18 @@ window.setupSimillarWizards = (function () {
     simillarSetup.classList.remove('hidden');
   }
 
-  if (window.util.userSetup) {
+  if (userSetup) {
     appendWizards();
 
-    if (window.util.setupOpen) {
-      window.util.setupOpen.addEventListener('click', window.setupControls.openSetup);
-      window.util.setupOpen.addEventListener('keydown', function (evt) {
+    if (setupOpen) {
+      setupOpen.addEventListener('click', window.setupControls.openSetup);
+      setupOpen.addEventListener('keydown', function (evt) {
         if (evt.key === 'Enter') {
           window.setupControls.openSetup();
         }
       });
 
-      window.util.setupClose.addEventListener('keydown', function (evt) {
+      setupClose.addEventListener('keydown', function (evt) {
 
         if (evt.key === 'Enter') {
           window.setupControls.closeSetup();
