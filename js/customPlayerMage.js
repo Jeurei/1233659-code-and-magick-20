@@ -32,6 +32,7 @@
     fireballColor.value = FIREBALL_COLORS[current];
     sliderCounter++;
   };
+
   window.customPlayerMage = {
     changeCoat: changeCoat,
     changeEyes: changeEyes,

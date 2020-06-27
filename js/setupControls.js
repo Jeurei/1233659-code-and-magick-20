@@ -4,6 +4,7 @@
   var MAX_NAME_LENGTH = 25;
   var userName = document.querySelector('.setup-user-name');
   var setupSubmit = document.querySelector('.setup-submit');
+  var setupForm = document.querySelector('.setup-wizard-form');
   var userSetup = document.querySelector('.setup');
   var userCoat = userSetup.querySelector('.wizard-coat');
   var userEyes = userSetup.querySelector('.wizard-eyes');
@@ -29,10 +30,14 @@
 
   };
 
-  var onSubmitSetup = function () {
+  var onSucessSubmit = function () {
     userSetup.classList.add('hidden');
-    userSetup.submit();
     setupSubmit.removeEventListener('click', onSubmitSetup);
+  };
+
+  var onSubmitSetup = function (evt) {
+    evt.preventDefault();
+    window.backend.save(new FormData(setupForm), onSucessSubmit, window.util.onError);
   };
 
   var checkInvalidUserName = function () {
@@ -81,6 +86,8 @@
 
     userFireball.addEventListener('click', window.customPlayerMage.changeFireball);
 
+    setupSubmit.addEventListener('submit', window.customPlayerMage.setupSubmit);
+
     setupClose.addEventListener('click', closeSetup);
 
     setupOpen.removeEventListener('click', openSetup);
@@ -107,6 +114,8 @@
     userEyes.removeEventListener('click', window.changeEyes);
 
     userFireball.removeEventListener('click', window.changeFireball);
+
+    setupSubmit.removeEventListener('submit', window.customPlayerMage.setupSubmit);
 
     setupOpen.addEventListener('click', openSetup);
 
