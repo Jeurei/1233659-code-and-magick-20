@@ -12,9 +12,7 @@
   function createArray(data) {
     var arr = [];
     for (var i = 0; i < QUANTITY_OF_WIZARDS; i++) {
-      var id = window.util.getRandomInRange(0, data.length - 1);
-      arr.push(data[id]);
-      data.splice(data[id], 1);
+      arr.push(data[i]);
     }
     return arr;
   }

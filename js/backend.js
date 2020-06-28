@@ -1,7 +1,9 @@
 'use strict';
 (function () {
+  var URL_SAVE = 'https://javascript.pages.academy/code-and-magick';
+  var URL_LOAD = 'https://javascript.pages.academy/code-and-magick/data';
+
   function backendSave(data, onSuccess, onError) {
-    var url = 'https://javascript.pages.academy/code-and-magick';
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
     xhr.addEventListener('load', function () {
@@ -20,13 +22,12 @@
       onError('Запрос не успел выполниться за ' + xhr.timeout + 'мс');
     });
 
+    xhr.open('POST', URL_SAVE);
     xhr.timeout = 10000;
-    xhr.open('POST', url);
     xhr.send(data);
   }
 
   function backendLoad(onSuccess, onError) {
-    var url = 'https://javascript.pages.academy/code-and-magick/data';
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
     xhr.addEventListener('load', function () {
@@ -44,8 +45,8 @@
       onError('Запрос не успел выполниться за ' + xhr.timeout + 'мс');
     });
 
+    xhr.open('GET', URL_LOAD);
     xhr.timeout = 10000;
-    xhr.open('GET', url);
     xhr.send();
 
   }
