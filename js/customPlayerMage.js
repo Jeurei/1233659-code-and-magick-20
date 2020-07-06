@@ -16,6 +16,8 @@
     var current = sliderCounter % COAT_COLORS.length;
     userCoat.style.fill = COAT_COLORS[current];
     coatColor.value = COAT_COLORS[current];
+    window.customPlayerMage.coatColor = COAT_COLORS[current];
+    window.util.debounce(window.setupSimillarWizards.updateWizards());
     sliderCounter++;
   };
 
@@ -23,19 +25,30 @@
     var current = sliderCounter % EYES_COLORS.length;
     userEyes.style.fill = EYES_COLORS[current];
     eyesColor.value = EYES_COLORS[current];
+    window.customPlayerMage.eyesColor = EYES_COLORS[current];
+    window.setupSimillarWizards.updateWizards();
     sliderCounter++;
   };
+
+  var onChangeCoat = window.util.debounce(changeCoat);
+
+  var onChangeEyes = window.util.debounce(changeEyes);
+
 
   var changeFireball = function () {
     var current = sliderCounter % FIREBALL_COLORS.length;
     userFireball.style.backgroundColor = FIREBALL_COLORS[current];
     fireballColor.value = FIREBALL_COLORS[current];
+    window.customPlayerMage.fireballColor = FIREBALL_COLORS[current];
     sliderCounter++;
   };
 
   window.customPlayerMage = {
-    changeCoat: changeCoat,
-    changeEyes: changeEyes,
+    changeCoat: onChangeCoat,
+    changeEyes: onChangeEyes,
     changeFireball: changeFireball,
+    coatColor: userCoat.style.fill,
+    eyesColor: userEyes.style.fill,
+    fireballColor: userFireball.style.backgroundColor,
   };
 })();

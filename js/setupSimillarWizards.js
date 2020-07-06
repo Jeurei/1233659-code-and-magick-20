@@ -7,13 +7,59 @@
   var template = document.querySelector('#similar-wizard-template').content.querySelector('.setup-similar-item');
   var setupOpen = document.querySelector('.setup-open');
   var setupClose = document.querySelector('.setup-close');
+  var currentCoatColor;
+  var currentEyesColor;
+  var wizards;
 
+  function updateCurrentColors() {
+    currentCoatColor = window.customPlayerMage.coatColor;
+    currentEyesColor = window.customPlayerMage.eyesColor;
+  }
+
+  function namesComparator(left, right) {
+    if (left > right) {
+      return 1;
+    } else if (left < right) {
+      return -1;
+    } else {
+      return 0;
+    }
+  }
+
+  var getRank = function (wizard) {
+    var rank = 0;
+
+    if (wizard.colorCoat === currentCoatColor) {
+      rank += 2;
+    }
+    if (wizard.colorEyes === currentEyesColor) {
+      rank += 1;
+    }
+
+    return rank;
+  };
 
   function createArray(data) {
     var arr = [];
-    for (var i = 0; i < QUANTITY_OF_WIZARDS; i++) {
-      arr.push(data[i]);
+
+    if (data) {
+      wizards = data;
     }
+
+    updateCurrentColors();
+
+    var sortedWizards = wizards.sort(function (left, right) {
+      var diff = getRank(right) - getRank(left);
+      if (diff === 0) {
+        diff = namesComparator(left.name, right.name);
+      }
+      return diff;
+    });
+
+    for (var i = 0; i < QUANTITY_OF_WIZARDS; i++) {
+      arr.push(sortedWizards[i]);
+    }
+
     return arr;
   }
 
@@ -33,6 +79,11 @@
   function onSuccess(data) {
     simillarList.appendChild(renderWizards(createArray(data)));
     simillarSetup.classList.remove('hidden');
+  }
+
+  function updateWizards() {
+    simillarList.innerHTML = '';
+    simillarList.appendChild(renderWizards(createArray()));
   }
 
   if (userSetup) {
@@ -55,4 +106,7 @@
 
     }
   }
+  window.setupSimillarWizards = {
+    updateWizards: updateWizards,
+  };
 })();
