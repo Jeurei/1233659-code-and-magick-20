@@ -11,6 +11,7 @@
   var userFireball = userSetup.querySelector('.setup-fireball-wrap');
   var setupOpen = document.querySelector('.setup-open');
   var setupClose = document.querySelector('.setup-close');
+  var avatarInput = userSetup.querySelector('.upload input[type="file"]');
 
   var onSetupEscPress = function (evt) {
 
@@ -76,6 +77,8 @@
 
     setupSubmit.addEventListener('keydown', onSetupEnterPress);
 
+    avatarInput.addEventListener('change', window.setupAvatar.change);
+
     userName.addEventListener('invalid', checkInvalidUserName);
 
     userName.addEventListener('input', checkInvalidInput);
@@ -104,6 +107,8 @@
     setupSubmit.removeEventListener('click', onSubmitSetup);
 
     setupSubmit.removeEventListener('keydown', onSetupEnterPress);
+
+    avatarInput.removeEventListener('change', window.setupAvatar.change);
 
     userName.removeEventListener('invalid', checkInvalidUserName);
 
